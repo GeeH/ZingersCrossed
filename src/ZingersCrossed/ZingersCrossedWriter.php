@@ -6,19 +6,40 @@ use \Zend\Log\Writer\AbstractWriter;
 class ZingersCrossedWriter extends AbstractWriter
 {
     /**
+     * Level of event that will trigger buffer to flush to writers
+     *
      * @var Int
      */
     protected $writeLevel;
 
     /**
+     * Buffer of logged events
+     *
      * @var array
      */
     protected $eventBuffer = array();
 
+    /**
+     * Array of priorities of logged events
+     *
+     * @var array
+     */
     protected $eventPriorities = array();
 
+    /**
+     * Proxied writers to use
+     *
+     * @var array
+     */
     protected $writers = array();
 
+    /**
+     * Constructor
+     *
+     * @param array $writers  An array of writers to proxy
+     * @param int $writeLevel  Level of event that will trigger buffer flush to writers
+     * @throws \InvalidArgumentException
+     */
     public function __construct(array $writers = array(), $writeLevel = \Zend\Log\Logger::ERR)
     {
         $this->writers = $writers;
@@ -29,6 +50,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Sets the level of event that is required to flush buffer to writers
+     *
      * @param $writeLevel
      * @return ZingersCrossedWriter
      */
@@ -39,6 +62,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Gets write level
+     *
      * @return Int
      */
     public function getWriteLevel()
@@ -47,6 +72,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Sets an array of writers to proxy
+     *
      * @param $writers
      * @return ZingersCrossedWriter
      */
@@ -57,6 +84,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Adds a single writer to the proxied writers
+     *
      * @param \Zend\Log\Writer\AbstractWriter $writer
      * @return ZingersCrossedWriter
      */
@@ -67,6 +96,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Gets proxied writers array
+     *
      * @return array
      */
     public function getWriters()
@@ -75,6 +106,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Performs a single log write
+     *
      * @param array $event
      */
     public function doWrite(array $event)
@@ -84,6 +117,8 @@ class ZingersCrossedWriter extends AbstractWriter
     }
 
     /**
+     * Checks if the buffered events need to be flushed to writers
+     *
      * @return bool
      */
     public function checkWrites()
